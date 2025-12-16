@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabedores de Paz | Presentación Interactiva</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS (via CDN for styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Custom Styles & Animations - ESTILO ORIGINAL */
+        :root {
+            --color-primary: #10B981; /* Esmeralda */
+            --color-secondary: #EC4899; /* Fucsia Colibrí */
+            --color-dark: #1F2937;
+            --color-light: #F3F4F6;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Scroll Snap for "Slide" feeling without being a slide */
+        .snap-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .section {
+            min-height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        /* Background Gradients */
+        .bg-gradient-hero {
+            background: linear-gradient(135deg, rgba(31,41,55,0.9), rgba(16,185,129,0.8)), url('https://images.unsplash.com/photo-1577083288073-40892c0860a4?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .bg-gradient-diag {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+        }
+
+        .bg-gradient-propuesta {
+            background: linear-gradient(to bottom right, #ff9966, #ff5e62);
+        }
+
+        .bg-gradient-concept {
+            background: linear-gradient(to top, #134e5e, #71b280);
+        }
+
+        .bg-gradient-icons {
+            background: #fff;
+            color: #333;
+        }
+
+        .bg-gradient-method {
+            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+        }
+
+        .bg-gradient-video {
+             background: #000;
+        }
+        
+        .bg-gradient-activity {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .section.active .fade-in-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-500 { transition-delay: 0.5s; }
+        .delay-600 { transition-delay: 0.6s; }
+
+        /* Icon Cards Hover Effect */
+        .icon-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .icon-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Accordion Styles */
+        .accordion-item:hover {
+            background-color: #f9fafb;
+        }
+        .accordion-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-item.active .accordion-content {
+            opacity: 1;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-secondary); 
+            border-radius: 4px;
+        }
+
+        /* Navigation Dots */
+        .nav-dots {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .dot.active {
+            background: var(--color-secondary);
+            transform: scale(1.3);
+        }
+        .dot-dark .dot {
+            background: rgba(0,0,0,0.3);
+        }
+        .dot-dark .dot.active {
+            background: var(--color-secondary);
+        }
+
+        /* Video Container */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            width: 80%;
+            max-width: 900px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Dots -->
+    <div class="nav-dots" id="navDots">
+        <div class="dot active" onclick="scrollToSection(0)"></div>
+        <div class="dot" onclick="scrollToSection(1)"></div>
+        <div class="dot" onclick="scrollToSection(2)"></div>
+        <div class="dot" onclick="scrollToSection(3)"></div>
+        <div class="dot" onclick="scrollToSection(4)"></div>
+        <div class="dot" onclick="scrollToSection(5)"></div>
+        <div class="dot" onclick="scrollToSection(6)"></div>
+        <div class="dot" onclick="scrollToSection(7)"></div>
+    </div>
+
+    <div class="snap-container" id="scroller">
+
+        <!-- SECTION 1: HERO / INTRO -->
+        <section class="section bg-gradient-hero text-white text-center px-4 relative">
+            <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+            <div class="relative z-10 max-w-4xl mx-auto">
+                <div class="mb-4 inline-block bg-pink-500 px-4 py-1 rounded-full text-sm font-bold tracking-wide uppercase fade-in-up">Proyecto Estímulos 2025</div>
+                <h1 class="text-6xl md:text-8xl font-black mb-6 leading-tight fade-in-up delay-100">
+                    SABEDORES <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">DE PAZ</span>
+                </h1>
+                <p class="text-xl md:text-2xl font-light mb-8 fade-in-up delay-200">
+                    Resignificando el territorio desde el arte y la memoria.
+                </p>
+                <div class="mt-8 fade-in-up delay-300">
+                    <p class="font-bold">Nixon Valero</p>
+                    <p class="text-sm opacity-80">Artes Plásticas y Visuales</p>
+                </div>
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                    <i class="fas fa-chevron-down text-2xl opacity-70"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: EL DIAGNÓSTICO -->
+        <section class="section bg-gradient-diag text-white px-6">
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="order-2 md:order-1 fade-in-up">
+                    <div class="bg-white bg-opacity-10 p-8 rounded-2xl backdrop-blur-sm border-l-4 border-red-400">
+                        <h3 class="text-red-300 text-xl font-bold mb-2 uppercase tracking-wider">El Contexto</h3>
+                        <p class="text-lg leading-relaxed mb-6">
+                            Históricamente, Cúcuta ha sido un territorio marcado por estigmas negativos que lo asocian al <strong>caos fronterizo</strong>.
+                        </p>
+                        <h3 class="text-red-300 text-xl font-bold mb-2 uppercase tracking-wider">La Consecuencia</h3>
+                        <p class="text-lg leading-relaxed mb-6">
+                            Estos imaginarios generan desconfianza e <strong>invisibilizan</strong> a quienes trabajan por el territorio.
+                        </p>
+                        <div class="text-3xl font-bold text-white mt-4">
+                            ¿Cómo transformamos esta mirada?
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 text-right fade-in-up delay-200">
+                    <h2 class="text-5xl md:text-7xl font-black opacity-20 absolute right-10 top-20 md:static">DIAGNÓSTICO</h2>
+                    <h2 class="text-4xl md:text-6xl font-bold relative z-10">Cúcuta: <br>Más allá del <br>Estigma</h2>
+                    <div class="h-2 w-32 bg-red-400 ml-auto mt-4"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: LA PROPUESTA -->
+        <section class="section bg-gradient-propuesta text-white px-6">
+            <div class="max-w-6xl mx-auto text-center">
+                <div class="mb-4 fade-in-up">
+                    <i class="fas fa-paint-roller text-6xl mb-4 text-yellow-200"></i>
+                </div>
+                <h2 class="text-4xl md:text-6xl font-bold mb-8 fade-in-up delay-100">La Propuesta</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                    <div class="bg-white text-gray-800 p-8 rounded-2xl shadow-xl fade-in-up delay-200 icon-card">
+                        <div class="text-orange-500 text-4xl mb-4"><i class="fas fa-bullseye"></i></div>
+                        <h3 class="text-xl font-bold mb-3">Objetivo</h3>
+                        <p class="text-sm">Promover la cultura de paz mediante un mural que visibilice los saberes, oficios y prácticas locales.</p>
+                    </div>
+                    
+                    <div class="bg-white text-gray-800 p-8 rounded-2xl shadow-xl fade-in-up delay-300 icon-card transform md:-translate-y-8 border-4 border-yellow-300">
+                        <div class="text-orange-500 text-4xl mb-4"><i class="fas fa-sync-alt"></i></div>
+                        <h3 class="text-xl font-bold mb-3">La Meta</h3>
+                        <p class="text-sm"><strong>Resignificar imaginarios</strong>: pasar de los estigmas a mostrar lo positivo y el potencial del territorio.</p>
+                    </div>
+
+                    <div class="bg-white text-gray-800 p-8 rounded-2xl shadow-xl fade-in-up delay-500 icon-card">
+                        <div class="text-orange-500 text-4xl mb-4"><i class="fas fa-map-marker-alt"></i></div>
+                        <h3 class="text-xl font-bold mb-3">Estrategia</h3>
+                        <p class="text-sm">Intervención de <strong>Arte Público</strong> en el Terminal de Transportes, punto de convergencia de rutas.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: EL CONCEPTO SABEDOR -->
+        <section class="section bg-gradient-concept text-white px-6">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2 fade-in-up">
+                    <div class="w-full h-96 bg-gray-900 rounded-3xl overflow-hidden shadow-2xl relative group">
+                        <img src="https://images.unsplash.com/photo-1572947650440-e8a97ef053b2?q=80&w=2070&auto=format&fit=crop" alt="Boceto Mural" class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition duration-500">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-3xl font-bold border-4 border-white px-6 py-2 text-center">TEJIDO SOCIAL</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 fade-in-up delay-200">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">¿Quién es el <span class="text-green-300">Sabedor</span>?</h2>
+                    <p class="text-xl leading-relaxed mb-6 font-light">
+                        Son las personas que, desde sus oficios, tradiciones y hacer cotidiano, <span class="font-bold border-b-2 border-green-300">contribuyen a la construcción del tejido social</span>.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-4">
+                            <div class="bg-green-500 p-3 rounded-full"><i class="fas fa-seedling"></i></div>
+                            <span>Agentes de transformación social y cambio.</span>
+                        </li>
+                        <li class="flex items-center gap-4">
+                            <div class="bg-green-500 p-3 rounded-full"><i class="fas fa-history"></i></div>
+                            <span>Guardianes de la memoria y la identidad.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: TRADUCCIÓN VISUAL (LAYOUT ACTUALIZADO) -->
+        <section class="section bg-gray-50 text-gray-800 px-6 relative">
+            <!-- Background Pattern -->
+            <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#444 1px, transparent 1px); background-size: 20px 20px;"></div>
+            
+            <div class="max-w-7xl mx-auto w-full z-10 h-full flex flex-col justify-center">
+                <h2 class="text-center text-4xl md:text-5xl font-black mb-12 text-gray-800 fade-in-up">Traducción <span class="text-pink-600">Visual</span></h2>
+                
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    
+                    <!-- LADO IZQUIERDO: IMAGEN DEL BOCETO -->
+                    <div class="w-full md:w-1/2 fade-in-up delay-100">
+                        <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white" style="height: 500px;">
+                            <!-- Placeholder image for the sketch -->
+                            <img src="https://images.unsplash.com/photo-1572947650440-e8a97ef053b2?q=80&w=2070&auto=format&fit=crop" alt="Boceto Mural" class="absolute inset-0 w-full h-full object-cover">
+                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-3 text-center">
+                                <p class="font-bold tracking-wider">BOCETO GENERAL</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LADO DERECHO: LISTA VERTICAL (ACORDEÓN) -->
+                    <div class="w-full md:w-1/2 flex flex-col gap-3 fade-in-up delay-200">
+                        
+                        <!-- Item 1 -->
+                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                            <div class="flex items-center p-3 border-l-4 border-pink-600">
+                                <div class="h-8 w-8 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 mr-4 shrink-0">
+                                    <i class="fas fa-female text-sm"></i>
+                                </div>
+                                <h4 class="font-bold text-gray-800 flex-grow">Figura Femenina</h4>
+                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                <p class="py-3 border-t border-gray-200">Representa al territorio y a los sabedores que aportan con su hacer cotidiano.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                            <div class="flex items-center p-3 border-l-4 border-purple-500">
+                                <div class="h-8 w-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 mr-4 shrink-0">
+                                    <i class="fas fa-hands-helping text-sm"></i>
+                                </div>
+                                <h4 class="font-bold text-gray-800 flex-grow">Manos y Tejido</h4>
+                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                <p class="py-3 border-t border-gray-200">Evocan el acto de tejer territorio, la unión, la cooperación y el trabajo compartido.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                            <div class="flex items-center p-3 border-l-4 border-orange-500">
+                                <div class="h-8 w-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 mr-4 shrink-0">
+                                    <i class="fas fa-home text-sm"></i>
+                                </div>
+                                <h4 class="font-bold text-gray-800 flex-grow">El Bohío (Pecho)</h4>
+                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                <p class="py-3 border-t border-gray-200">Espacio de acogida y refugio. Remite al carácter hospitalario del territorio.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 4 -->
+                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                            <div class="flex items-center p-3 border-l-4 border-blue-500">
+                                <div class="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-4 shrink-0">
+                                    <i class="fas fa-drum text-sm"></i>
+                                </div>
+                                <h4 class="font-bold text-gray-800 flex-grow">Los Oficios</h4>
+                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                <p class="py-3 border-t border-gray-200">Modelado de barro, danza, tambor. Intercambio de conocimientos y trabajo colectivo.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 5 -->
+                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                            <div class="flex items-center p-3 border-l-4 border-red-500">
+                                <div class="h-8 w-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 mr-4 shrink-0">
+                                    <i class="fas fa-fan text-sm"></i>
+                                </div>
+                                <h4 class="font-bold text-gray-800 flex-grow">Flores Simbólicas</h4>
+                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                <p class="py-3 border-t border-gray-200">Diversidad, creatividad y riqueza de saberes. Aluden a la memoria histórica.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 6 -->
+                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                            <div class="flex items-center p-3 border-l-4 border-green-500">
+                                <div class="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-4 shrink-0">
+                                    <i class="fas fa-feather-alt text-sm"></i>
+                                </div>
+                                <h4 class="font-bold text-gray-800 flex-grow">El Colibrí</h4>
+                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                            </div>
+                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                <p class="py-3 border-t border-gray-200">Elemento complementario que indica renovación, resiliencia y vida.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: VIDEO (Antes de Metodología) -->
+        <section class="section bg-gradient-video text-white flex-col">
+            <h2 class="text-3xl font-bold mb-8 fade-in-up">Memoria del Proceso</h2>
+            <div class="video-wrapper fade-in-up delay-200">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=0&controls=1&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <p class="mt-6 text-gray-400 text-sm">Visualización del concepto y boceto animado.</p>
+        </section>
+
+        <!-- SECTION 7: METODOLOGÍA -->
+        <section class="section bg-gradient-method text-gray-900 px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-5xl font-bold mb-12 fade-in-up">Metodología del Creador</h2>
+                
+                <div class="flex flex-col md:flex-row items-center justify-between relative fade-in-up delay-100">
+                    <!-- Step 1 -->
+                    <div class="w-full md:w-1/3 p-4 relative z-10">
+                        <div class="bg-white h-32 w-32 rounded-full flex items-center justify-center mx-auto shadow-xl mb-4 border-4 border-gray-800">
+                            <i class="fas fa-eye text-4xl"></i>
+                        </div>
+                        <h3 class="font-bold text-xl">1. Leer</h3>
+                        <p class="text-sm mt-2">Identificar qué le duele al territorio (El Estigma).</p>
+                    </div>
+
+                    <!-- Arrow Desktop -->
+                    <div class="hidden md:block absolute top-16 left-28 w-1/3 h-1 bg-gray-800 z-0"></div>
+                    <div class="hidden md:block absolute top-16 right-28 w-1/3 h-1 bg-gray-800 z-0"></div>
+
+                    <!-- Step 2 -->
+                    <div class="w-full md:w-1/3 p-4 relative z-10">
+                        <div class="bg-gray-900 text-white h-40 w-40 rounded-full flex items-center justify-center mx-auto shadow-2xl mb-4 transform scale-110">
+                            <i class="fas fa-lightbulb text-5xl text-yellow-400"></i>
+                        </div>
+                        <h3 class="font-bold text-xl">2. Activar Saber</h3>
+                        <p class="text-sm mt-2">¿Qué herramienta tengo yo para responder?</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="w-full md:w-1/3 p-4 relative z-10">
+                        <div class="bg-white h-32 w-32 rounded-full flex items-center justify-center mx-auto shadow-xl mb-4 border-4 border-gray-800">
+                            <i class="fas fa-hand-holding-heart text-4xl text-red-500"></i>
+                        </div>
+                        <h3 class="font-bold text-xl">3. Simbolizar</h3>
+                        <p class="text-sm mt-2">Transformar lo negativo en una propuesta positiva.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 8: LA HOJA DE RUTA -->
+        <section class="section bg-gradient-activity text-white px-6">
+             <div class="max-w-4xl mx-auto text-center">
+                 <h2 class="text-4xl md:text-6xl font-black mb-8 fade-in-up">Ahora es tu turno</h2>
+                 <div class="bg-white text-gray-900 p-8 rounded-2xl shadow-2xl max-w-2xl mx-auto transform rotate-1 fade-in-up delay-200">
+                     <h3 class="text-2xl font-bold mb-4 uppercase tracking-wider text-pink-600">Hoja de Ruta del Sabedor</h3>
+                     <div class="text-left space-y-4 font-mono text-sm md:text-base">
+                         <p class="border-b border-gray-300 pb-2"><strong>1. EL DIAGNÓSTICO:</strong> ¿Qué problema veo en mi territorio?</p>
+                         <p class="border-b border-gray-300 pb-2"><strong>2. MI SABER:</strong> ¿Desde qué oficio o técnica aporto?</p>
+                         <p class="border-b border-gray-300 pb-2"><strong>3. LA ACCIÓN:</strong> ¿Qué propuesta concreta voy a crear?</p>
+                         <p><strong>4. EL SÍMBOLO:</strong> ¿Cuál será mi enfoque simbólico?</p>
+                     </div>
+                 </div>
+                 <div class="mt-8 fade-in-up delay-300">
+                    <p class="text-xl font-light">Llenemos la ficha y comencemos a tejer.</p>
+                 </div>
+             </div>
+        </section>
+
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const sections = document.querySelectorAll('.section');
+        const dots = document.querySelectorAll('.dot');
+        const navDots = document.getElementById('navDots');
+
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    const index = Array.from(sections).indexOf(entry.target);
+                    updateDots(index);
+
+                    // Change dot color based on background lightness
+                    if(index === 4 || index === 6) { 
+                        navDots.classList.add('dot-dark');
+                    } else {
+                        navDots.classList.remove('dot-dark');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        function updateDots(activeIndex) {
+            dots.forEach((dot, index) => {
+                if (index === activeIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function scrollToSection(index) {
+            sections[index].scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Accordion Logic
+        function toggleAccordion(element) {
+            const content = element.querySelector('.accordion-content');
+            
+            // Close all others
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                if(item !== element) {
+                    item.classList.remove('active');
+                    item.querySelector('.accordion-content').style.maxHeight = null;
+                }
+            });
+
+            // Toggle current
+            if (element.classList.contains('active')) {
+                element.classList.remove('active');
+                content.style.maxHeight = null;
+            } else {
+                element.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+    </script>
+</body>
+</html>
