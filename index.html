@@ -58,6 +58,7 @@
         }
 
         /* Background Gradients */
+        /* CAMBIO 1: Restaurada la imagen de fondo anterior (Unsplash) */
         .bg-gradient-hero {
             background: linear-gradient(135deg, rgba(31,41,55,0.9), rgba(16,185,129,0.8)), url('https://images.unsplash.com/photo-1577083288073-40892c0860a4?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
@@ -303,11 +304,9 @@
         <section class="section bg-gradient-concept text-white px-6">
             <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
                 <div class="w-full md:w-1/2 fade-in-up">
-                    <div class="w-full h-96 bg-gray-900 rounded-3xl overflow-hidden shadow-2xl relative group">
-                        <img src="https://images.unsplash.com/photo-1572947650440-e8a97ef053b2?q=80&w=2070&auto=format&fit=crop" alt="Boceto Mural" class="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition duration-500">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-3xl font-bold border-4 border-white px-6 py-2 text-center">TEJIDO SOCIAL</span>
-                        </div>
+                    <!-- CAMBIO 2: Contenedor alargado (h-[600px]) para que se vea el boceto completo -->
+                    <div class="w-full bg-gray-900 rounded-3xl overflow-hidden shadow-2xl relative group h-[600px]">
+                        <img src="https://github.com/nixon97/sabedordepaz/blob/main/boceto.jpg?raw=true" alt="Boceto Mural" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                 </div>
                 <div class="w-full md:w-1/2 fade-in-up delay-200">
@@ -329,111 +328,112 @@
             </div>
         </section>
 
-        <!-- SECTION 5: TRADUCCIÓN VISUAL (LAYOUT ACTUALIZADO) -->
+        <!-- SECTION 5: TRADUCCIÓN VISUAL -->
         <section class="section bg-gray-50 text-gray-800 px-6 relative">
             <!-- Background Pattern -->
             <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(#444 1px, transparent 1px); background-size: 20px 20px;"></div>
             
             <div class="max-w-7xl mx-auto w-full z-10 h-full flex flex-col justify-center">
-                <h2 class="text-center text-4xl md:text-5xl font-black mb-12 text-gray-800 fade-in-up">Traducción <span class="text-pink-600">Visual</span></h2>
                 
-                <div class="flex flex-col md:flex-row gap-8 items-start">
+                <div class="flex flex-col md:flex-row gap-10 items-stretch h-full py-10">
                     
-                    <!-- LADO IZQUIERDO: IMAGEN DEL BOCETO -->
-                    <div class="w-full md:w-1/2 fade-in-up delay-100">
-                        <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white" style="height: 500px;">
-                            <!-- Placeholder image for the sketch -->
-                            <img src="https://images.unsplash.com/photo-1572947650440-e8a97ef053b2?q=80&w=2070&auto=format&fit=crop" alt="Boceto Mural" class="absolute inset-0 w-full h-full object-cover">
-                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-3 text-center">
-                                <p class="font-bold tracking-wider">BOCETO GENERAL</p>
-                            </div>
+                    <!-- LADO IZQUIERDO: IMAGEN DEL BOCETO AGRANDADA -->
+                    <!-- CAMBIO 3: Imagen más grande y completa, ocupando todo el alto disponible -->
+                    <div class="w-full md:w-1/2 fade-in-up delay-100 flex items-center">
+                        <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl border-4 border-white h-[700px]">
+                            <img src="https://github.com/nixon97/sabedordepaz/blob/main/boceto.jpg?raw=true" alt="Boceto Mural" class="absolute inset-0 w-full h-full object-cover">
                         </div>
                     </div>
 
-                    <!-- LADO DERECHO: LISTA VERTICAL (ACORDEÓN) -->
-                    <div class="w-full md:w-1/2 flex flex-col gap-3 fade-in-up delay-200">
+                    <!-- LADO DERECHO: TÍTULO Y LISTA VERTICAL -->
+                    <div class="w-full md:w-1/2 flex flex-col gap-6 fade-in-up delay-200 justify-center">
                         
-                        <!-- Item 1 -->
-                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
-                            <div class="flex items-center p-3 border-l-4 border-pink-600">
-                                <div class="h-8 w-8 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 mr-4 shrink-0">
-                                    <i class="fas fa-female text-sm"></i>
-                                </div>
-                                <h4 class="font-bold text-gray-800 flex-grow">Figura Femenina</h4>
-                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
-                            </div>
-                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
-                                <p class="py-3 border-t border-gray-200">Representa al territorio y a los sabedores que aportan con su hacer cotidiano.</p>
-                            </div>
-                        </div>
+                        <!-- CAMBIO 4: Título movido aquí para liberar espacio a la izquierda -->
+                        <h2 class="text-left text-4xl md:text-5xl font-black text-gray-800">Traducción <span class="text-pink-600">Visual</span></h2>
 
-                        <!-- Item 2 -->
-                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
-                            <div class="flex items-center p-3 border-l-4 border-purple-500">
-                                <div class="h-8 w-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 mr-4 shrink-0">
-                                    <i class="fas fa-hands-helping text-sm"></i>
+                        <div class="flex flex-col gap-3">
+                            <!-- Item 1 -->
+                            <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                                <div class="flex items-center p-3 border-l-4 border-pink-600">
+                                    <div class="h-8 w-8 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 mr-4 shrink-0">
+                                        <i class="fas fa-female text-sm"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-800 flex-grow">Figura Femenina</h4>
+                                    <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
                                 </div>
-                                <h4 class="font-bold text-gray-800 flex-grow">Manos y Tejido</h4>
-                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                                <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                    <p class="py-3 border-t border-gray-200">Representa al territorio y a los sabedores que aportan con su hacer cotidiano.</p>
+                                </div>
                             </div>
-                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
-                                <p class="py-3 border-t border-gray-200">Evocan el acto de tejer territorio, la unión, la cooperación y el trabajo compartido.</p>
-                            </div>
-                        </div>
 
-                        <!-- Item 3 -->
-                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
-                            <div class="flex items-center p-3 border-l-4 border-orange-500">
-                                <div class="h-8 w-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 mr-4 shrink-0">
-                                    <i class="fas fa-home text-sm"></i>
+                            <!-- Item 2 -->
+                            <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                                <div class="flex items-center p-3 border-l-4 border-purple-500">
+                                    <div class="h-8 w-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 mr-4 shrink-0">
+                                        <i class="fas fa-hands-helping text-sm"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-800 flex-grow">Manos y Tejido</h4>
+                                    <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
                                 </div>
-                                <h4 class="font-bold text-gray-800 flex-grow">El Bohío (Pecho)</h4>
-                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                                <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                    <p class="py-3 border-t border-gray-200">Evocan el acto de tejer territorio, la unión, la cooperación y el trabajo compartido.</p>
+                                </div>
                             </div>
-                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
-                                <p class="py-3 border-t border-gray-200">Espacio de acogida y refugio. Remite al carácter hospitalario del territorio.</p>
-                            </div>
-                        </div>
 
-                        <!-- Item 4 -->
-                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
-                            <div class="flex items-center p-3 border-l-4 border-blue-500">
-                                <div class="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-4 shrink-0">
-                                    <i class="fas fa-drum text-sm"></i>
+                            <!-- Item 3 -->
+                            <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                                <div class="flex items-center p-3 border-l-4 border-orange-500">
+                                    <div class="h-8 w-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 mr-4 shrink-0">
+                                        <i class="fas fa-home text-sm"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-800 flex-grow">El Bohío (Pecho)</h4>
+                                    <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
                                 </div>
-                                <h4 class="font-bold text-gray-800 flex-grow">Los Oficios</h4>
-                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                                <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                    <p class="py-3 border-t border-gray-200">Espacio de acogida y refugio. Remite al carácter hospitalario del territorio.</p>
+                                </div>
                             </div>
-                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
-                                <p class="py-3 border-t border-gray-200">Modelado de barro, danza, tambor. Intercambio de conocimientos y trabajo colectivo.</p>
-                            </div>
-                        </div>
 
-                        <!-- Item 5 -->
-                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
-                            <div class="flex items-center p-3 border-l-4 border-red-500">
-                                <div class="h-8 w-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 mr-4 shrink-0">
-                                    <i class="fas fa-fan text-sm"></i>
+                            <!-- Item 4 -->
+                            <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                                <div class="flex items-center p-3 border-l-4 border-blue-500">
+                                    <div class="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-4 shrink-0">
+                                        <i class="fas fa-drum text-sm"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-800 flex-grow">Los Oficios</h4>
+                                    <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
                                 </div>
-                                <h4 class="font-bold text-gray-800 flex-grow">Flores Simbólicas</h4>
-                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                                <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                    <p class="py-3 border-t border-gray-200">Modelado de barro, danza, tambor. Intercambio de conocimientos y trabajo colectivo.</p>
+                                </div>
                             </div>
-                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
-                                <p class="py-3 border-t border-gray-200">Diversidad, creatividad y riqueza de saberes. Aluden a la memoria histórica.</p>
-                            </div>
-                        </div>
 
-                        <!-- Item 6 -->
-                        <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
-                            <div class="flex items-center p-3 border-l-4 border-green-500">
-                                <div class="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-4 shrink-0">
-                                    <i class="fas fa-feather-alt text-sm"></i>
+                            <!-- Item 5 -->
+                            <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                                <div class="flex items-center p-3 border-l-4 border-red-500">
+                                    <div class="h-8 w-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 mr-4 shrink-0">
+                                        <i class="fas fa-fan text-sm"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-800 flex-grow">Flores Simbólicas</h4>
+                                    <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
                                 </div>
-                                <h4 class="font-bold text-gray-800 flex-grow">El Colibrí</h4>
-                                <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                                <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                    <p class="py-3 border-t border-gray-200">Diversidad, creatividad y riqueza de saberes. Aluden a la memoria histórica.</p>
+                                </div>
                             </div>
-                            <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
-                                <p class="py-3 border-t border-gray-200">Elemento complementario que indica renovación, resiliencia y vida.</p>
+
+                            <!-- Item 6 -->
+                            <div class="accordion-item bg-white rounded-lg shadow-md cursor-pointer border border-gray-100" onclick="toggleAccordion(this)">
+                                <div class="flex items-center p-3 border-l-4 border-green-500">
+                                    <div class="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-4 shrink-0">
+                                        <i class="fas fa-feather-alt text-sm"></i>
+                                    </div>
+                                    <h4 class="font-bold text-gray-800 flex-grow">El Colibrí</h4>
+                                    <i class="fas fa-chevron-down text-gray-400 accordion-icon"></i>
+                                </div>
+                                <div class="accordion-content bg-gray-50 text-sm text-gray-600 px-4">
+                                    <p class="py-3 border-t border-gray-200">Elemento complementario que indica renovación, resiliencia y vida.</p>
+                                </div>
                             </div>
                         </div>
 
@@ -442,11 +442,11 @@
             </div>
         </section>
 
-        <!-- SECTION 6: VIDEO (Antes de Metodología) -->
+        <!-- SECTION 6: VIDEO -->
         <section class="section bg-gradient-video text-white flex-col">
             <h2 class="text-3xl font-bold mb-8 fade-in-up">Memoria del Proceso</h2>
             <div class="video-wrapper fade-in-up delay-200">
-                <iframe src="https://youtu.be/bVjjyW_jbg0?si=-68eUx9icGmr_ayY" frameborder="0" allowfullscreen></iframe>
+                <iframe src="https://youtu.be/bVjjyW_jbg0?si=BMZutRWb7_jGfuVa" frameborder="0" allowfullscreen></iframe>
             </div>
             <p class="mt-6 text-gray-400 text-sm">Visualización del concepto y boceto animado.</p>
         </section>
